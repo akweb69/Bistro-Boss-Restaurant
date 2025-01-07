@@ -1,0 +1,20 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html,
+body {
+  max-width: 1600px;
+  margin: 0 auto;
+  overflow-x: hidden;
+  background-color: rgb(0, 0, 31);
+  min-height: 100vh;
+  color: white;
+}
+
+.bistro-boss {
+  background-image: url("../src/assets/home/chef-service.jpg");
+}
+.checkit {
+  background-image: url("../src/assets/home/featured.jpg");
+}
