@@ -2,8 +2,10 @@ import React, { useContext } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import logo from "../assets/logo.png"
 import { AuthContext } from '../AuthProvider/AuthProvider';
+import useCart from '../Hooks/useCart';
 const Navbar = () => {
     const { user, logOut } = useContext(AuthContext)
+    const [data] = useCart()
 
     return (
         <div>
@@ -32,10 +34,10 @@ const Navbar = () => {
                             <li><NavLink to={"/dashboard"}>DashBoard</NavLink></li>
                             <li><NavLink to={"/our-menu"}>Our Menu</NavLink></li>
                             <li><NavLink to={"/our-shop"}>Our Shop</NavLink></li>
-                            <li><button className="btn">
+                            <li><Link to={"/dashboard/cart"} className="btn">
                                 Inbox
-                                <div className="badge badge-secondary">+99</div>
-                            </button></li>
+                                <div className="badge badge-secondary">+{data?.length}</div>
+                            </Link></li>
 
 
 
@@ -58,10 +60,10 @@ const Navbar = () => {
                         <li><NavLink to={"/dashboard"}>DashBoard</NavLink></li>
                         <li><NavLink to={"/our-menu"}>Our Menu</NavLink></li>
                         <li><NavLink to={"/our-shop"}>Our Shop</NavLink></li>
-                        <li><button className="btn btn-sm rounded-full">
+                        <li><Link to={"/dashboard/cart"} className="btn btn-sm rounded-full ml-3">
                             Cart
-                            <div className="badge badge-secondary">0</div>
-                        </button></li>
+                            <div className="badge badge-secondary">+{data?.length}</div>
+                        </Link></li>
 
                     </ul>
                 </div>

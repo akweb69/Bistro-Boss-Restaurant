@@ -1,6 +1,29 @@
 import React from 'react';
+import { useContext } from 'react';
+import { AuthContext } from '../AuthProvider/AuthProvider';
+import useAxiosSecure from '../Hooks/useAxiosSecure';
+import toast from 'react-hot-toast';
+import useCart from '../Hooks/useCart';
 
 const FoodCard = ({ item }) => {
+    const { user } = useContext(AuthContext)
+    const axiosSecure = useAxiosSecure()
+    const [, refetch] = useCart()
+    const handleCartBtn = (id) => {
+
+        const data = { menuId: id, email: user?.email }
+        axiosSecure.post("/cartItem", data)
+            .then(res => {
+                if (res.data.acknowledged) {
+                    toast.success(`${item?.name} is added to cart`)
+                    refetch()
+                }
+            })
+            .catch(err => {
+                console.log(err)
+            })
+    }
+
     return (
         <div>
             <div className="bg-orange-600 bg-opacity-30 h-full flex flex-col relative">
@@ -15,7 +38,9 @@ const FoodCard = ({ item }) => {
                         <p className="pb-4 text-gray-300">{item?.recipe.slice(0, 70)}</p>
 
                     </div>
-                    <div className="btn btn-outline bg-orange-600 bg-opacity-5 text-white w-fit mx-auto border-0 border-b-4">
+                    <div
+                        onClick={() => handleCartBtn(item?._id)}
+                        className="btn btn-outline bg-orange-600 bg-opacity-5 text-white w-fit mx-auto border-0 border-b-4">
                         Add To Cart
                     </div>
                 </div>
